@@ -18,18 +18,18 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.11.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.11.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="1. 前后端分离的概念在开发的时候，前端使用前端的服务器（Nginx）,后端使用后端的服务器（Tomcat），前端开发页面，后端提供接口（功能都封装在接口里），这就是前后端分离。那什么叫反向代理呢？前端发送请求通过前端服务器转发给后端，这就是反向代理。网上有一张图非常形象生动：  2. 在vue中的实践首先是在 src\main.js 中设置反向代理 12345678import Vue from">
+    <meta name="description" content="1. 前后端分离的概念在开发的时候，前端使用前端的服务器（Nginx）,后端使用后端的服务器（Tomcat），前端开发页面，后端提供接口（功能都封装在接口里），这就是前后端分离。那什么叫反向代理呢？前端发送请求通过前端服务器转发给后端，这就是反向代理。网上有一张图非常形象生动：">
 <meta property="og:type" content="article">
 <meta property="og:title" content="前后端分离思想">
 <meta property="og:url" content="http://example.com/2022/08/23/%E5%89%8D%E5%90%8E%E7%AB%AF%E5%88%86%E7%A6%BB/index.html">
 <meta property="og:site_name" content="Welcome - The Growing Place">
-<meta property="og:description" content="1. 前后端分离的概念在开发的时候，前端使用前端的服务器（Nginx）,后端使用后端的服务器（Tomcat），前端开发页面，后端提供接口（功能都封装在接口里），这就是前后端分离。那什么叫反向代理呢？前端发送请求通过前端服务器转发给后端，这就是反向代理。网上有一张图非常形象生动：  2. 在vue中的实践首先是在 src\main.js 中设置反向代理 12345678import Vue from">
+<meta property="og:description" content="1. 前后端分离的概念在开发的时候，前端使用前端的服务器（Nginx）,后端使用后端的服务器（Tomcat），前端开发页面，后端提供接口（功能都封装在接口里），这就是前后端分离。那什么叫反向代理呢？前端发送请求通过前端服务器转发给后端，这就是反向代理。网上有一张图非常形象生动：">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/2022/08/23/%E5%89%8D%E5%90%8E%E7%AB%AF%E5%88%86%E7%A6%BB/20190406203528720.png">
-<meta property="article:published_time" content="2022-08-23T07:53:20.000Z">
-<meta property="article:modified_time" content="2022-08-23T09:00:11.734Z">
+<meta property="article:published_time" content="2022-08-23T07:53:20.979Z">
+<meta property="article:modified_time" content="2022-08-23T13:04:24.766Z">
 <meta property="article:author" content="MeLibra">
 <meta property="article:tag" content="前后端分离">
 <meta property="article:tag" content="vue">
@@ -65,6 +65,9 @@
       <div class="header-inner"><div class="site-brand-container">
   <div class="site-nav-toggle">
     <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
     </div>
   </div>
 
@@ -79,15 +82,46 @@
 
   <div class="site-nav-right">
     <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
 
 
 
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="th fa-fw"></i>分类</a></li><li class="menu-item menu-item-search"><a href="/search/" rel="section"><i class="search fa-fw"></i>搜索</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
 
 
 
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
 
 </div>
         
@@ -206,7 +240,7 @@
       <span class="post-meta-item-text">发表于</span>
       
 
-      <time title="创建时间：2022-08-23 15:53:20 / 修改时间：17:00:11" itemprop="dateCreated datePublished" datetime="2022-08-23T15:53:20+08:00">2022-08-23</time>
+      <time title="创建时间：2022-08-23 15:53:20 / 修改时间：21:04:24" itemprop="dateCreated datePublished" datetime="2022-08-23T15:53:20+08:00">2022-08-23</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -229,6 +263,8 @@
     
     <div class="post-body" itemprop="articleBody">
         <h4 id="1-前后端分离的概念"><a href="#1-前后端分离的概念" class="headerlink" title="1. 前后端分离的概念"></a>1. 前后端分离的概念</h4><p>在开发的时候，前端使用前端的服务器（Nginx）,后端使用后端的服务器（Tomcat），前端开发页面，后端提供接口（功能都封装在接口里），这就是前后端分离。那什么叫<strong>反向代理</strong>呢？前端发送请求通过前端服务器转发给后端，这就是反向代理。网上有一张图非常形象生动：</p>
+<span id="more"></span>
+
 <p><img src="/2022/08/23/%E5%89%8D%E5%90%8E%E7%AB%AF%E5%88%86%E7%A6%BB/20190406203528720.png" alt="反向代理"></p>
 <h4 id="2-在vue中的实践"><a href="#2-在vue中的实践" class="headerlink" title="2. 在vue中的实践"></a>2. 在vue中的实践</h4><p>首先是在 <strong>src\main.js</strong> 中设置反向代理</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="title class_">Vue</span> <span class="keyword">from</span> <span class="string">&#x27;vue&#x27;</span></span><br><span class="line"><span class="keyword">import</span> <span class="title class_">App</span> <span class="keyword">from</span> <span class="string">&#x27;./App&#x27;</span></span><br><span class="line"><span class="keyword">import</span> router <span class="keyword">from</span> <span class="string">&#x27;./router&#x27;</span></span><br><span class="line"><span class="comment">// 设置反向代理，前端请求默认发送到 http://localhost:8443/api</span></span><br><span class="line"><span class="keyword">let</span> axios = <span class="built_in">require</span>(<span class="string">&#x27;axios&#x27;</span>)</span><br><span class="line">axios.<span class="property">defaults</span>.<span class="property">baseURL</span> = <span class="string">&#x27;http://localhost:8443/api&#x27;</span></span><br><span class="line"><span class="comment">// 全局注册，之后可在其他组件中通过 this.$axios 发送数据</span></span><br><span class="line"><span class="title class_">Vue</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">$axios</span> = axios</span><br></pre></td></tr></table></figure>
@@ -247,7 +283,7 @@
 
 <p>至此，前端就部署完成了。</p>
 <p>后端开发只需要在配置文件<strong>application.properties</strong>加上 <strong>server.port &#x3D;8443</strong></p>
-<p>两个项目分别启动，在localhost:8080&#x2F;#&#x2F;login</p>
+<p>两个项目分别启动，访问localhost:8080&#x2F;#&#x2F;login</p>
 
     </div>
 
@@ -266,7 +302,7 @@
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2022/08/22/3/" rel="prev" title="Echarts的使用 - 可视化大屏工具">
+                <a href="/2022/08/20/3/" rel="prev" title="Echarts的使用 - 可视化大屏工具">
                   <i class="fa fa-chevron-left"></i> Echarts的使用 - 可视化大屏工具
                 </a>
             </div>
@@ -308,6 +344,8 @@
 <script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
 
   
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
 
 
 

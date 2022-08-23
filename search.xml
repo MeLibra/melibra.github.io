@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>js脚本-生成指定日期范围内的数据</title>
+    <url>/2022/08/15/1/</url>
+    <content><![CDATA[<h4 id="1-如何将用户与数据进行循环匹配？"><a href="#1-如何将用户与数据进行循环匹配？" class="headerlink" title="1. 如何将用户与数据进行循环匹配？"></a>1. 如何将用户与数据进行循环匹配？</h4><p>假设用户ID有8条，数据ID有100条，每个用户每天匹配一条数据，直到100条匹配完成。<br>其实非常简单，只需要将用户与数据分别作为两个数组</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">let userID = []    </span><br><span class="line">let planID = []</span><br></pre></td></tr></table></figure>
+<p>然后<strong>使用数据的长度作为唯一循环条件</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">for(var i=0; i&lt;planID.length; i++)&#123;</span><br><span class="line">    console.log(planId[i],userId[i%8])</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>使用%取余就实现了不断循环用户去匹配数据的效果</p>
+<h4 id="2-如何生成指定范围内的日期？"><a href="#2-如何生成指定范围内的日期？" class="headerlink" title="2. 如何生成指定范围内的日期？"></a>2. 如何生成指定范围内的日期？</h4><span id="more"></span>
+
+<p>假设在刚刚的基础上，日期要根据100条数据逐日递增，且后面要跟上随机时间，例如<br><code>2022-03-01 08:00:00 - 2022-05-03 08:00:00</code></p>
+<p>需要想到的事，数据是每日一条，那么时间也是每日一条，所以循环条件肯定是数据的长度</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">for(let i=0; i&lt;planId.length; i++)&#123;</span><br><span class="line">    let a = new Date(&quot;2022,03,01&quot; +(Math.floor(Math.random()*10))+&quot;:&quot;+(Math.floor(Math.random()*30))+&quot;:00&quot;).setDate(new Date(&quot;2022-05-01 00:00:00&quot;).getDate()+i);</span><br><span class="line">    console.log(a)</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>如此就能根据数据的长度生成指定范围的日期和随机时间，这里用到了JavaScript的Date，以及生成随机数的Math.random.</p>
+<p>需要注意的是，new Date出来的数据是时间戳，要生成我们平时见的时间需要格式化</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">function formatTime(time)&#123;</span><br><span class="line">    let d = new Date(time);</span><br><span class="line">    let year = d.getFullYear();</span><br><span class="line">    let month = d.getMonth() &gt;= 10 ? d.getMonth() : (&#x27;0&#x27; + d.getMonth());</span><br><span class="line">    let day = d.getDate() &gt;= 10 ? d.getDate() : (&#x27;0&#x27; + d.getDate());</span><br><span class="line">    let hour = d.getHours() &lt; 10 ? &quot;0&quot; + d.getHours() : d.getHours();</span><br><span class="line">    let minute = d.getMinutes() &lt; 10 ? &quot;0&quot; + d.getMinutes() : d.getMinute();</span><br><span class="line">    let second = d.getSeconds() &lt; 10 ? &quot;0&quot; + d.getSeconds() : d.getSecond();</span><br><span class="line"></span><br><span class="line">    return year + &quot;-&quot; + month + &quot;-&quot; + day + &#x27; &#x27; + hour + &#x27;:&#x27; + minute + &#x27;:&#x27; + second;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>最后如何将这三条数据整合在一起呢？<br>使用ES6+的模板语法就可以做到</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">for(var i=0;i&lt;planId.length;i++)&#123;</span><br><span class="line">    let s  += `</span><br><span class="line">        $&#123;userId[i%8]&#125;;</span><br><span class="line">        $&#123;planId[i]&#125;;</span><br><span class="line">        $&#123;arr[i]&#125;      </span><br><span class="line">        `</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">console.log(s)  </span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>JavaScript</category>
+      </categories>
+      <tags>
+        <tag>脚本</tag>
+        <tag>JavaScript-Date</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>最常用的数据库查表语句</title>
+    <url>/2022/08/20/2/</url>
+    <content><![CDATA[<p>记录一下最常见的两张表关联查询语句：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SELECT * FROM 表1 A INNER JOIN 表2 B on a.? = b.? AND ？=&#x27;&#x27;</span><br></pre></td></tr></table></figure>
+<p>将需要进行查询的表1作为A，提供查询条件的表2作为B，两张表通过一个相同字段进行关联，根据表2的查询条件进行整合。</p>
+]]></content>
+      <categories>
+        <category>mysql</category>
+      </categories>
+      <tags>
+        <tag>mysql</tag>
+        <tag>navicat</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Echarts的使用 - 可视化大屏工具</title>
+    <url>/2022/08/20/3/</url>
+    <content><![CDATA[<h4 id="1-在项目中引用"><a href="#1-在项目中引用" class="headerlink" title="1. 在项目中引用"></a>1. 在项目中引用</h4><p>Echarts是一个基于 JavaScript 的开源可视化图表库，在项目中一般是以一个组件的形式存在</p>
+<p><strong>安装命令</strong>：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install echarts --save</span><br></pre></td></tr></table></figure>
+
+<p><strong>引入命令</strong>（可在单个组件中局部注册或者在main.js中全局注册）：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">import * as echarts from &#x27;echarts&#x27;;</span><br></pre></td></tr></table></figure>
+
+<p><strong>初始化</strong>（固定操作，一般只关注option里的设置）：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div id = &quot;main&quot;&gt;&lt;/div&gt;</span><br><span class="line"> &lt;/template&gt;</span><br><span class="line"> ……</span><br><span class="line"> &lt;script&gt;</span><br><span class="line">   let myChart = echarts.init(document.getElementById(&#x27;main&#x27;));</span><br><span class="line">   let option = &#123;……&#125;;</span><br><span class="line">   myChart.setOption(option)</span><br><span class="line"> &lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-官方文档命令速查"><a href="#2-官方文档命令速查" class="headerlink" title="2. 官方文档命令速查"></a>2. 官方文档命令速查</h4><p><a href="https://echarts.apache.org/zh/cheat-sheet.html">https://echarts.apache.org/zh/cheat-sheet.html</a></p>
+<h4 id="3-使用"><a href="#3-使用" class="headerlink" title="3. 使用"></a>3. 使用</h4><span id="more"></span>
+
+<p>一般常见的可视化图表都包含如下属性：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line">  option = &#123;</span><br><span class="line">    title: &#123;</span><br><span class="line">        text: &#x27;&#x27;,</span><br><span class="line">    &#125;,</span><br><span class="line">    legend: &#123;</span><br><span class="line">        show: true,</span><br><span class="line">        icon: &#x27;circle&#x27;,</span><br><span class="line">        itemGap: 68  //图例间距 68px</span><br><span class="line">        bottom: 50   //可通过bottom、top、left、right调整位置</span><br><span class="line">        itemStyle: &#123;&#125;, //图例图标样式</span><br><span class="line">        textStyle: &#123;&#125;  //图例文本样式</span><br><span class="line">    &#125;,</span><br><span class="line">    tooltip: &#123;</span><br><span class="line">        show: true  //打开鼠标经过会有提示，默认关闭</span><br><span class="line">    &#125;,</span><br><span class="line">    series: [</span><br><span class="line">      &#123;</span><br><span class="line">        type: &#x27;line&#x27;</span><br><span class="line">        data: []</span><br><span class="line">      &#125;</span><br><span class="line">    ]</span><br><span class="line">  &#125;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<p>series是option内的重要部分，data放置的地方，有多少个不同的data，series内就有多少组对象。如果是基础的图表，上面的属性足以；但如果有一些特殊的设计，则需要查阅官方文档的属性。以下是echarts实例的几个社区，里面含有大量的示例，可供参考：</p>
+<p><a href="http://echarts.zhangmuchen.top/#/index">MCChart</a></p>
+<p><a href="https://www.isqqw.com/">首页 - ECharts Demo集,echarts gallery社区,Make A Pie,分享你的可视化作品isqqw.com</a></p>
+<p><a href="http://ppchart.com/#/">http://ppchart.com/#/</a></p>
+]]></content>
+      <categories>
+        <category>Echarts</category>
+      </categories>
+      <tags>
+        <tag>Echarts</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>前后端分离思想</title>
+    <url>/2022/08/23/%E5%89%8D%E5%90%8E%E7%AB%AF%E5%88%86%E7%A6%BB/</url>
+    <content><![CDATA[<h4 id="1-前后端分离的概念"><a href="#1-前后端分离的概念" class="headerlink" title="1. 前后端分离的概念"></a>1. 前后端分离的概念</h4><p>在开发的时候，前端使用前端的服务器（Nginx）,后端使用后端的服务器（Tomcat），前端开发页面，后端提供接口（功能都封装在接口里），这就是前后端分离。那什么叫<strong>反向代理</strong>呢？前端发送请求通过前端服务器转发给后端，这就是反向代理。网上有一张图非常形象生动：</p>
+<span id="more"></span>
+
+<p><img src="/2022/08/23/%E5%89%8D%E5%90%8E%E7%AB%AF%E5%88%86%E7%A6%BB/20190406203528720.png" alt="反向代理"></p>
+<h4 id="2-在vue中的实践"><a href="#2-在vue中的实践" class="headerlink" title="2. 在vue中的实践"></a>2. 在vue中的实践</h4><p>首先是在 <strong>src\main.js</strong> 中设置反向代理</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="title class_">Vue</span> <span class="keyword">from</span> <span class="string">&#x27;vue&#x27;</span></span><br><span class="line"><span class="keyword">import</span> <span class="title class_">App</span> <span class="keyword">from</span> <span class="string">&#x27;./App&#x27;</span></span><br><span class="line"><span class="keyword">import</span> router <span class="keyword">from</span> <span class="string">&#x27;./router&#x27;</span></span><br><span class="line"><span class="comment">// 设置反向代理，前端请求默认发送到 http://localhost:8443/api</span></span><br><span class="line"><span class="keyword">let</span> axios = <span class="built_in">require</span>(<span class="string">&#x27;axios&#x27;</span>)</span><br><span class="line">axios.<span class="property">defaults</span>.<span class="property">baseURL</span> = <span class="string">&#x27;http://localhost:8443/api&#x27;</span></span><br><span class="line"><span class="comment">// 全局注册，之后可在其他组件中通过 this.$axios 发送数据</span></span><br><span class="line"><span class="title class_">Vue</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">$axios</span> = axios</span><br></pre></td></tr></table></figure>
+
+<p><strong>Login.vue</strong></p>
+<p>前端写一个简单的登录，拿到后端返回的成功状态码200后跳转到指定目录</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div&gt;</span><br><span class="line">      用户名:&lt;input type=&quot;text&quot; v-model=&quot;loginForm.username&quot; placeholder=&quot;请输入用户名&quot;/&gt;</span><br><span class="line">      &lt;br&gt;&lt;br&gt;</span><br><span class="line">      密码： &lt;input type=&quot;password&quot; v-model=&quot;loginForm.password&quot; placeholder=&quot;请输入密码&quot;/&gt;</span><br><span class="line">      &lt;br&gt;&lt;br&gt;</span><br><span class="line">      &lt;button v-on:click=&quot;login&quot;&gt;登录&lt;/button&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line"></span><br><span class="line">  export default &#123;</span><br><span class="line">    name: &#x27;Login&#x27;,</span><br><span class="line">    data () &#123;</span><br><span class="line">      return &#123;</span><br><span class="line">        loginForm: &#123;</span><br><span class="line">          username: &#x27;&#x27;,</span><br><span class="line">          password: &#x27;&#x27;</span><br><span class="line">        &#125;,</span><br><span class="line">        responseResult: []</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">  // 定义了登录按钮的点击方法</span><br><span class="line">  methods: &#123;</span><br><span class="line">    login () &#123;</span><br><span class="line">      var _this = this</span><br><span class="line">      console.log(this.$store.state)</span><br><span class="line">      // 向后端/login发送数据</span><br><span class="line">      this.$axios</span><br><span class="line">        .post(&#x27;/login&#x27;, &#123;</span><br><span class="line">          username: this.loginForm.username,</span><br><span class="line">          password: this.loginForm.password</span><br><span class="line">        &#125;)</span><br><span class="line">        // 如果成功跳转到/index</span><br><span class="line">        .then((successResponse) =&gt; &#123;</span><br><span class="line">          if (successResponse.data.code === 200) &#123;</span><br><span class="line">            _this.$store.commit(&#x27;login&#x27;, _this.loginForm)</span><br><span class="line">            // 这个地方route不要写成router！！！！！, 否则不能跳转</span><br><span class="line">            var path = this.$route.query.redirect</span><br><span class="line">            this.$router.replace(&#123;path: path === &#x27;/&#x27; || path === undefined ? &#x27;/index&#x27; : path&#125;)</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">        .catch((failResponse) =&gt; &#123;&#125;)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<p>接下来在<strong>src&#x2F;router&#x2F;index.js</strong>中配置路由</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">new</span> <span class="title class_">Router</span>(&#123;</span><br><span class="line">  <span class="attr">routes</span>: [</span><br><span class="line">  <span class="comment">// 下面都是固定的写法</span></span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">path</span>: <span class="string">&#x27;/login&#x27;</span>,</span><br><span class="line">      <span class="attr">name</span>: <span class="string">&#x27;Login&#x27;</span>,</span><br><span class="line">      <span class="attr">component</span>: <span class="title class_">Login</span></span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">path</span>: <span class="string">&#x27;/index&#x27;</span>,</span><br><span class="line">      <span class="attr">name</span>: <span class="string">&#x27;AppIndex&#x27;</span>,</span><br><span class="line">      <span class="attr">component</span>: <span class="title class_">AppIndex</span>  <span class="comment">//用来测试是否能跳转的组件</span></span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>别忘了还有最重要的一步：</p>
+<p>前端开发的域名是localhost:8080，连接到后端localhost:8443属于跨域，会报错</p>
+<p>在<strong>config\index.js</strong>中，找到proxyTable</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 跨域支持</span></span><br><span class="line"><span class="attr">proxyTable</span>: &#123;</span><br><span class="line">  <span class="string">&#x27;/api&#x27;</span>: &#123;</span><br><span class="line">    <span class="attr">target</span>: <span class="string">&#x27;http://localhost:8443&#x27;</span>,</span><br><span class="line">    <span class="attr">changeOrigin</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">pathRewrite</span>: &#123;</span><br><span class="line">      <span class="string">&#x27;^/api&#x27;</span>: <span class="string">&#x27;&#x27;</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+
+<p>至此，前端就部署完成了。</p>
+<p>后端开发只需要在配置文件<strong>application.properties</strong>加上 <strong>server.port &#x3D;8443</strong></p>
+<p>两个项目分别启动，访问localhost:8080&#x2F;#&#x2F;login</p>
+]]></content>
+      <categories>
+        <category>前后端分离</category>
+      </categories>
+      <tags>
+        <tag>前后端分离</tag>
+        <tag>vue</tag>
+        <tag>spring-boot</tag>
+      </tags>
+  </entry>
+</search>
