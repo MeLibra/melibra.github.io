@@ -42,6 +42,37 @@
       </tags>
   </entry>
   <entry>
+    <title>Echarts在vue中的使用以及根据窗口大小自动重绘</title>
+    <url>/2022/08/20/Echarts/</url>
+    <content><![CDATA[<h4 id="1-在项目中引用"><a href="#1-在项目中引用" class="headerlink" title="1. 在项目中引用"></a>1. 在项目中引用</h4><p>Echarts是一个基于 JavaScript 的开源可视化图表库，可视化大屏中常用的饼图、柱状图和线性图都可以用echarts轻松解决。</p>
+<p><strong>安装命令</strong>：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install echarts --save</span><br></pre></td></tr></table></figure>
+
+<p><strong>引入命令</strong>（可在单个组件中局部注册或者在main.js中全局注册）：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">import * as echarts from &#x27;echarts&#x27;;</span><br></pre></td></tr></table></figure>
+
+<p><strong>初始化</strong>：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div class=&quot;chart&quot; ref=&quot;container&quot;&gt;</span><br><span class="line">    &lt;div class=&quot;echarts&quot; ref=&quot;chartDom&quot;&gt;&lt;/div&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line"> &lt;/template&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">import * as echarts from &#x27;echarts&#x27;;</span><br><span class="line">export default &#123;</span><br><span class="line">  name: &#x27;&#x27;,</span><br><span class="line">  props: &#123;</span><br><span class="line">  &#125;,</span><br><span class="line">  data () &#123;</span><br><span class="line">    return &#123;</span><br><span class="line">      myChart: null</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  mounted () &#123;</span><br><span class="line">    //在挂载中使用nextTick，当数据在dom中渲染后，再执行drawChart函数，这样可以顺利拿到数据。</span><br><span class="line">    this.$nextTick(() =&gt; &#123;</span><br><span class="line">        this.drawChart();</span><br><span class="line">          </span><br><span class="line">        window.addEventListener(&quot;resize&quot;,() =&gt;&#123;</span><br><span class="line">            this.resize();//重绘函数</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;,</span><br><span class="line">  methods: &#123;</span><br><span class="line">      //定义画图方法</span><br><span class="line">    drawChart () &#123;</span><br><span class="line">      //初始化</span><br><span class="line">      let $chartDom = this.$refs.chartDom,</span><br><span class="line">      myEcharts = (this.myChart = echarts.init($chartDom)),</span><br><span class="line">    &#125;</span><br><span class="line">    //重绘函数</span><br><span class="line">    resize () &#123;</span><br><span class="line">      if (this.myChart) &#123;</span><br><span class="line">        let container = this.$refs.container,</span><br><span class="line">          conWidth = container &amp;&amp; container.clientWidth,</span><br><span class="line">          conHeight = container &amp;&amp; container.clientHeight;</span><br><span class="line">        this.myChart.resize(&#123;</span><br><span class="line">          width: conWidth + &quot;px&quot;,</span><br><span class="line">          height: conHeight + &quot;px&quot;</span><br><span class="line">        &#125;);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-官方文档命令速查"><a href="#2-官方文档命令速查" class="headerlink" title="2. 官方文档命令速查"></a>2. 官方文档命令速查</h4><p><a href="https://echarts.apache.org/zh/cheat-sheet.html">https://echarts.apache.org/zh/cheat-sheet.html</a></p>
+<h4 id="3-使用"><a href="#3-使用" class="headerlink" title="3. 使用"></a>3. 使用</h4><span id="more"></span>
+
+<p>一般常见的可视化图表都包含如下属性：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line">  option = &#123;</span><br><span class="line">    title: &#123;</span><br><span class="line">        text: &#x27;&#x27;,</span><br><span class="line">    &#125;,</span><br><span class="line">    legend: &#123;</span><br><span class="line">      //此处需要注意：要想legend显示，serise对象需要有name，否则不会显示</span><br><span class="line">        show: true,</span><br><span class="line">        icon: &#x27;circle&#x27;,</span><br><span class="line">        itemGap: 68  //图例间距 68px</span><br><span class="line">        bottom: 50   //可通过bottom、top、left、right调整位置</span><br><span class="line">        itemStyle: &#123;&#125;, //图例图标样式</span><br><span class="line">        textStyle: &#123;&#125;  //图例文本样式</span><br><span class="line">    &#125;,</span><br><span class="line">    tooltip: &#123;</span><br><span class="line">        show: true  //打开鼠标经过会有提示，默认关闭</span><br><span class="line">    &#125;,</span><br><span class="line">    series: [</span><br><span class="line">      &#123;</span><br><span class="line">        name: &#x27;&#x27;,</span><br><span class="line">        type: &#x27;line&#x27;</span><br><span class="line">        data: []</span><br><span class="line">      &#125;</span><br><span class="line">    ]</span><br><span class="line">  &#125;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<p>series是option内的重要部分，data放置的地方，有多少个不同的data，series内就有多少组对象。如果是基础的图表，上面的属性足以；但如果有一些特殊的设计，则需要查阅官方文档的属性。以下是echarts实例的几个社区，里面含有大量的示例，可供参考：</p>
+<p><a href="http://echarts.zhangmuchen.top/#/index">MCChart</a></p>
+<p><a href="https://www.isqqw.com/">首页 - ECharts Demo集,echarts gallery社区,Make A Pie,分享你的可视化作品isqqw.com</a></p>
+<p><a href="http://ppchart.com/#/">http://ppchart.com/#/</a></p>
+]]></content>
+      <categories>
+        <category>Echarts</category>
+      </categories>
+      <tags>
+        <tag>Echarts</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>前后端分离思想</title>
     <url>/2022/08/23/%E5%89%8D%E5%90%8E%E7%AB%AF%E5%88%86%E7%A6%BB/</url>
     <content><![CDATA[<h4 id="1-前后端分离的概念"><a href="#1-前后端分离的概念" class="headerlink" title="1. 前后端分离的概念"></a>1. 前后端分离的概念</h4><p>在开发的时候，前端使用前端的服务器（Nginx）,后端使用后端的服务器（Tomcat），前端开发页面，后端提供接口（功能都封装在接口里），这就是前后端分离。那什么叫<strong>反向代理</strong>呢？前端发送请求通过前端服务器转发给后端，这就是反向代理。网上有一张图非常形象生动：</p>
@@ -74,37 +105,6 @@
         <tag>前后端分离</tag>
         <tag>vue</tag>
         <tag>spring-boot</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Echarts的使用 - 可视化大屏工具</title>
-    <url>/2022/08/20/Echarts/</url>
-    <content><![CDATA[<h4 id="1-在项目中引用"><a href="#1-在项目中引用" class="headerlink" title="1. 在项目中引用"></a>1. 在项目中引用</h4><p>Echarts是一个基于 JavaScript 的开源可视化图表库，在项目中一般是以一个组件的形式存在</p>
-<p><strong>安装命令</strong>：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install echarts --save</span><br></pre></td></tr></table></figure>
-
-<p><strong>引入命令</strong>（可在单个组件中局部注册或者在main.js中全局注册）：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">import * as echarts from &#x27;echarts&#x27;;</span><br></pre></td></tr></table></figure>
-
-<p><strong>初始化</strong>（固定操作，一般只关注option里的设置）：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">		&lt;!-- 此处要有宽高 --&gt;</span><br><span class="line">  &lt;div id = &quot;main&quot; style=&quot;width: 318px; height: 393px&quot;&gt;&lt;/div&gt;</span><br><span class="line"> &lt;/template&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">import * as echarts from &#x27;echarts&#x27;;</span><br><span class="line">export default &#123;</span><br><span class="line">  name: &#x27;&#x27;,</span><br><span class="line">  props: &#123;</span><br><span class="line">  &#125;,</span><br><span class="line">  data () &#123;</span><br><span class="line">    return &#123;&#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  mounted () &#123;</span><br><span class="line">    this.chart()</span><br><span class="line">  &#125;,</span><br><span class="line">  methods: &#123;</span><br><span class="line">    chart () &#123;</span><br><span class="line">	  let myChart = this.$echarts.init(document.getElementById(&#x27;main&#x27;));</span><br><span class="line">      myChart.setOption(&#123;</span><br><span class="line">          ……</span><br><span class="line">      &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
-
-<h4 id="2-官方文档命令速查"><a href="#2-官方文档命令速查" class="headerlink" title="2. 官方文档命令速查"></a>2. 官方文档命令速查</h4><p><a href="https://echarts.apache.org/zh/cheat-sheet.html">https://echarts.apache.org/zh/cheat-sheet.html</a></p>
-<h4 id="3-使用"><a href="#3-使用" class="headerlink" title="3. 使用"></a>3. 使用</h4><span id="more"></span>
-
-<p>一般常见的可视化图表都包含如下属性：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line">  option = &#123;</span><br><span class="line">    title: &#123;</span><br><span class="line">        text: &#x27;&#x27;,</span><br><span class="line">    &#125;,</span><br><span class="line">    legend: &#123;</span><br><span class="line">      //此处需要注意：要想legend显示，serise对象需要有name，否则不会显示</span><br><span class="line">        show: true,</span><br><span class="line">        icon: &#x27;circle&#x27;,</span><br><span class="line">        itemGap: 68  //图例间距 68px</span><br><span class="line">        bottom: 50   //可通过bottom、top、left、right调整位置</span><br><span class="line">        itemStyle: &#123;&#125;, //图例图标样式</span><br><span class="line">        textStyle: &#123;&#125;  //图例文本样式</span><br><span class="line">    &#125;,</span><br><span class="line">    tooltip: &#123;</span><br><span class="line">        show: true  //打开鼠标经过会有提示，默认关闭</span><br><span class="line">    &#125;,</span><br><span class="line">    series: [</span><br><span class="line">      &#123;</span><br><span class="line">        name: &#x27;&#x27;,</span><br><span class="line">        type: &#x27;line&#x27;</span><br><span class="line">        data: []</span><br><span class="line">      &#125;</span><br><span class="line">    ]</span><br><span class="line">  &#125;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
-
-<p>series是option内的重要部分，data放置的地方，有多少个不同的data，series内就有多少组对象。如果是基础的图表，上面的属性足以；但如果有一些特殊的设计，则需要查阅官方文档的属性。以下是echarts实例的几个社区，里面含有大量的示例，可供参考：</p>
-<p><a href="http://echarts.zhangmuchen.top/#/index">MCChart</a></p>
-<p><a href="https://www.isqqw.com/">首页 - ECharts Demo集,echarts gallery社区,Make A Pie,分享你的可视化作品isqqw.com</a></p>
-<p><a href="http://ppchart.com/#/">http://ppchart.com/#/</a></p>
-]]></content>
-      <categories>
-        <category>Echarts</category>
-      </categories>
-      <tags>
-        <tag>Echarts</tag>
       </tags>
   </entry>
 </search>
